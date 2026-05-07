@@ -1,0 +1,23 @@
+import React from "react";
+import { Text, View } from "react-native";
+import { Button } from "../../atomos";
+
+interface RegisterFormProps{
+    onSubmit: () => void;
+}
+
+const RegisterForm = (
+    {onSubmit}: RegisterFormProps
+) => {
+    return (
+        <View>
+            <Text>Formulario Registro</Text>
+            <Button
+                title="Registrarme"
+                onSubmit={onSubmit}>
+            </Button>
+        </View>
+    )
+}
+
+export default RegisterForm
