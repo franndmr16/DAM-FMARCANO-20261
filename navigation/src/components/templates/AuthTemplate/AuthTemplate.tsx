@@ -1,25 +1,38 @@
 import React from "react";
-import { View, Text, SafeAreaView } from "react-native";
+
+import { View, Text } from "react-native";
 import { styles } from "./AuthTemplateStyles";
 
 interface AuthTemplateProps {
-    title: string;
-    subtitle?: string;
-    children: React.ReactNode;
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
 }
 
-const AuthTemplate = ({title, subtitle, children}: AuthTemplateProps) => {
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.headerContainer}>
-                <Text style={styles.title}>{title}</Text>
-                { subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-            </View>
-            <View style={styles.formContainer}>
-                {children}
-            </View>
-        </SafeAreaView>
-    );
-}
+const AuthTemplate = ({
+  title,
+  subtitle,
+  children,
+}: AuthTemplateProps) => {
+
+  return (
+
+    <View style={styles.container}>
+      <Text style={styles.title}>
+        {title}
+      </Text>
+
+      {subtitle && (
+        <Text style={styles.subtitle}>
+          {subtitle}
+        </Text>
+      )}
+      <View style={styles.content}>
+        {children}
+      </View>
+
+    </View>
+  );
+};
 
 export default AuthTemplate;

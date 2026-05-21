@@ -1,31 +1,43 @@
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../../themes/colors";
+
+import { colors, sizes } from "../../../themes";
 
 export const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center',     
+
+    justifyContent: "center",
+
+    paddingHorizontal: sizes.xxs,
+
+    backgroundColor: colors.white,
   },
-  headerContainer: {
-    alignItems: 'center',
-    marginBottom: 30,
-  },
+
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: COLORS.black,
-    textTransform: 'uppercase',
-    letterSpacing: 2,
+    textAlign: "center",
+
+    fontSize: sizes.xxl,
+
+    fontWeight: "700",
+
+    color: colors.black,
+
+    marginBottom: sizes.sm,
   },
+
+
   subtitle: {
-    fontSize: 16,
-    color: COLORS.text,
-    marginTop: 5,
+    textAlign: "center",
+
+    fontSize: sizes.lg,
+
+    color: colors.black,
+
+    marginBottom: sizes.xxl,
   },
-  formContainer: {
-    width: '100%',
-  }
+
+  content: {
+    width: "100%",
+  },
 });
