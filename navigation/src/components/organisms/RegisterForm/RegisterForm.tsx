@@ -1,28 +1,52 @@
-import React from "react";
-import { View, ScrollView } from "react-native";
-import { Button, Input } from "../../atomos";
-import { styles } from "./RegisterFormStyle";
+import React, { useState } from "react";
+import { View, Text } from "react-native";
+import { Button } from "../../atoms";
+import { styles } from "./RegisterFormStyles";
+import { InputField } from "../../moleculas";
 
 interface RegisterFormProps {
-  onSubmit: () => void;
+  onSubmit: (data: {
+    nombre: string;
+    username: string;
+    correo: string;
+    fechaNacimiento: string;
+    contrasena: string;
+  }) => void;
+  disableAction: boolean;
 }
 
-const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
+const RegisterForm = ({ onSubmit, disableAction }: RegisterFormProps) => {
+  const [nombre, setNombre] = useState("");
+  const [username, setUsername] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [contrasena, setContrasena] = useState("");
+  const [confirmar, setConfirmar] = useState("");
+
+  const handleSubmit = () => {
+    if (contrasena !== confirmar) {
+      console.error("Las contraseñas no coinciden");
+      return;
+    }
+    onSubmit({ nombre, username, correo, fechaNacimiento, contrasena });
+  };
+
   return (
-    <ScrollView 
-      style={styles.scrollContainer} 
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <Input label="FULL NAME" placeholder="John Doe" />
-      <Input label="USERNAME" placeholder="johndoe123" />
-      <Input label="EMAIL ADDRESS" placeholder="johndoe@example.com" />
-      <Input label="DATE OF BIRTH" placeholder="YYYY-MM-DD" />
-      <Input label="PASSWORD" placeholder="Minimum 8 chars" secureTextEntry={true} />
-      <Input label="CONFIRM PASSWORD" placeholder="Re-enter password" secureTextEntry={true} />
-      
-      <Button title="Registrarme" onSubmit={onSubmit} />
-    </ScrollView>
+    <View>
+      <InputField label="FULL NAME" placeholder="Enter your full name"
+        value={nombre} onChangeText={setNombre} />
+      <InputField label="USERNAME" placeholder="Enter your username"
+        value={username} onChangeText={setUsername} />
+      <InputField label="EMAIL" placeholder="Enter your email"
+        value={correo} onChangeText={setCorreo} />
+      <InputField label="DATE OF BIRTH" placeholder="YYYY-MM-DD"
+        value={fechaNacimiento} onChangeText={setFechaNacimiento} />
+      <InputField label="PASSWORD" placeholder="Enter your password"
+        secureTextEntry value={contrasena} onChangeText={setContrasena} />
+      <InputField label="CONFIRM PASSWORD" placeholder="Confirm your password"
+        secureTextEntry value={confirmar} onChangeText={setConfirmar} />
+      <Button title="CREATE ACCOUNT" onSubmit={handleSubmit} disable={disableAction} />
+    </View>
   );
 };
 

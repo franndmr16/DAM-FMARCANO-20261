@@ -1,8 +1,9 @@
-export interface User{
+export interface User {
     id?: number;
-    nombre: string;
-    username: string;
-    correo: string;
-    fechaNacimiento: string;
-    contrasena: string;
+    nombre: String;
+    username: String;
+    correo: String;
+    fechaNacimiento: String;
+    contrasena: String;
 }
+

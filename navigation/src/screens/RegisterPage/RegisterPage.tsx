@@ -1,37 +1,40 @@
 import React from "react";
 import { AuthTemplate } from "../../components/templates";
 import { RegisterForm } from "../../components/organisms";
+
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import { AuthStackParamList } from "../../Routes";
-import { AuthService } from "core/services";
+import AuthService from "../../core/services/AuthService/AuthService";
 
-const LoginPage = () =>{
-    const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
-    
-    const handleRegister = async () => {
-        console.log("Tap en registro")
+const RegisterPage = () => {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+const handleRegister = async (data: {
+  nombre: string;
+  username: string;
+  correo: string;
+  fechaNacimiento: string;
+  contrasena: string;
+}) => {
+  try {
+    await AuthService.register(data);      
+    navigation.navigate("Login");
+  } catch (error) {
+    console.error("Error al registrar:", error);
+  }
+};
+<RegisterForm onSubmit={handleRegister} disableAction={false} />
 
-        const dummyUser = {
-            nombre: 'Pepito',
-            username: 'Pepito_unbosque',
-            correo: 'pepito@unbosque.edu.co',
-            fechaNacimiento: '10/10/2003',
-            contrasena: '12345'
-        }
+  return (
+    <AuthTemplate
+      title="Register"
+      subtitle="Create a new account"
+    >
+      <RegisterForm onSubmit={handleRegister} disableAction={false} />
+    </AuthTemplate>
+  );
+};
 
-        await AuthService.register(dummyUser)  ;
-
-        navigation.navigate('Login');
-    }
-    return(
-        <AuthTemplate
-            title="Register"
-            subtitle="Create a new account"> 
-           <RegisterForm onSubmit={handleRegister} />
-        </AuthTemplate>
-    )
-}
-
-export default LoginPage;
-
+export default RegisterPage;

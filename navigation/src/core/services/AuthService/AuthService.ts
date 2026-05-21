@@ -1,31 +1,21 @@
-import { User } from "core/entities";
-import { UserRepository } from "core/repositories";
-import AuthRepository from "core/repositories/AuthRepository/AuthRepository";
+import { User } from "../../entities";
+import { UserRepository } from "../../repositories";
+import AuthRepository from "../../repositories/AuthRepository/AuthRepository";
 
 const AuthService = {
-    
-    register: async (user: User): Promise<User>  => {
-        const userExist = UserRepository.fidnByUsername(user.username);
-        
-        if(userExist){
-            console.error(`Usuario con username ya existe: ${user.username}, ya existe`);
-            throw new Error('EL usuario ya existe')
+    register: async (user: User): Promise<User> => {
+        const userExist = UserRepository.findByUsername(user.username);
+        if (userExist) {
+            throw new Error("El usuario ya existe");
         }
-
         const id = UserRepository.create(user);
-
-        if(id == undefined){
-            console.error(`Usuario con username ${user.username}, ya existe`);
-            throw new Error('EL usuario no se pudo crear')
-
+        if (id === undefined) {
+            throw new Error("No se puede crear");
         }
-        const newUser = {...user,id};
-
-        await AuthRepository.save(user);
-        
+        const newUser: User = { ...user, id };
+        await AuthRepository.save(newUser);
         return newUser;
+    }
+};
 
-    },
-}
-export default AuthService
-//screen no se comunica con el repositorio
+export default AuthService;
